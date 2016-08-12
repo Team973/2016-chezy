@@ -1,0 +1,75 @@
+{
+    "_comment": "Stow, Batter, far shot, and near shot are located by index, not by name.  when you press the stow button, it'll load the first pose in this list.  It doesn't care about the name of the pose, just the index.  Don't get confused thinking the name means anything.  The name is there for humans to read only... the computer ignores it (it does print the name though for human convenience)",
+    "poses": [
+        {
+            "name": "stow",
+            "armControl": false,
+            "armTarget": 75.0,
+            "intakeExtended": false,
+            "longCylinderExtended": false,
+            "shortCylinderExtended": false,
+            "superiorFlywheelControl": "open",
+            "inferiorFlywheelControl": "open",
+            "superiorFlywheelRPM": 0.0,
+            "inferiorFlywheelRPM": 0.0,
+            "superiorFlywheelPower": 0.6,
+            "inferiorFlywheelPower": 0.8
+        },
+        {
+            "name": "batter-shot",
+            "armControl": true,
+            "armTarget": 40.0,
+            "intakeExtended": false,
+            "longCylinderExtended": true,
+            "shortCylinderExtended": true,
+            "superiorFlywheelControl": "closed",
+            "inferiorFlywheelControl": "open",
+            "superiorFlywheelRPM": 4500.0,
+            "inferiorFlywheelRPM": 0.0,
+            "superiorFlywheelPower": 1.0,
+            "inferiorFlywheelPower": 0.8
+        },
+        {
+            "name": "chival-cross",
+            "armControl": true,
+            "armTarget": 40.0,
+            "intakeExtended": false,
+            "longCylinderExtended": false,
+            "shortCylinderExtended": true,
+            "superiorFlywheelControl": "open",
+            "inferiorFlywheelControl": "open",
+            "superiorFlywheelRPM": 4600.0,
+            "inferiorFlywheelRPM": 4600.0,
+            "superiorFlywheelPower": 0.4,
+            "inferiorFlywheelPower": 0.4
+        },
+        {
+            "name": "near-defense",
+            "armControl": true,
+            "armTarget": 40.0,
+            "intakeExtended": false,
+            "longCylinderExtended": true,
+            "shortCylinderExtended": false,
+            "superiorFlywheelControl": "closed",
+            "inferiorFlywheelControl": "open",
+            "superiorFlywheelRPM": 4575.0,
+            "inferiorFlywheelRPM": 4575.0,
+            "superiorFlywheelPower": 0.4,
+            "inferiorFlywheelPower": 0.8
+        },
+        {
+            "name": "placeholder",
+            "armControl": true,
+            "armTarget": 40.0,
+            "intakeExtended": false,
+            "longCylinderExtended": true,
+            "shortCylinderExtended": false,
+            "superiorFlywheelControl": "closed",
+            "inferiorFlywheelControl": "open",
+            "superiorFlywheelRPM": 4500.0,
+            "inferiorFlywheelRPM": 4500.0,
+            "superiorFlywheelPower": 0.4,
+            "inferiorFlywheelPower": 0.8
+        }
+    ]
+}

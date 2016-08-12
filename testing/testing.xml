@@ -1,0 +1,24 @@
+<testsuites>
+	<testsuite name="AllTests" tests="16">
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixFlash"/>
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixSetGet"/>
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixEquality"/>
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixMultiplication"/>
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixAddition"/>
+		<testcase classname="AllTests" name="TestMatrix::TestMatrixSubtraction"/>
+		<testcase classname="AllTests" name="TestFilters::TestMedianFilter"/>
+		<testcase classname="AllTests" name="TestFilters::TestMedianOf3Filter"/>
+		<testcase classname="AllTests" name="TestFilters::TestMovingAverageFilter"/>
+		<testcase classname="AllTests" name="TestTaskMgr::TestRegisterUnregister"/>
+		<testcase classname="AllTests" name="TestJoystickHelper::TestButtonEventCallback">
+			<failure message="../src/TestJoystickHelper.cpp:66 TestButtonEventCallback: 0 == obs.calls.size() expected:	0	but was:	4	">
+TestButtonEventCallback: 0 == obs.calls.size() expected:	0	but was:	4	
+			</failure>
+		</testcase>
+		<testcase classname="AllTests" name="TestJoystickHelper::TestVirtualJoystickButtons"/>
+		<testcase classname="AllTests" name="TestPoseManager::TestFirstPose"/>
+		<testcase classname="AllTests" name="TestPoseManager::TestSecondPose"/>
+		<testcase classname="AllTests" name="TestPoseManager::TestWrapPose"/>
+		<testcase classname="AllTests" name="TestPoseManager::TestRePose"/>
+	</testsuite>
+</testsuites>
