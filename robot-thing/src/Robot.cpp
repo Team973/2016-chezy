@@ -10,11 +10,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Drive.h"
-#include "subsystems/Hanger.h"
-
-#include "lib/filters/Debouncer.h"
-
-#include "PoseManager.h"
+#include "subsystems/Turret.h"
 
 namespace frc973 {
 
@@ -31,22 +27,15 @@ Robot::Robot(void
 	m_driverJoystick(nullptr),
 	m_operatorJoystick(nullptr),
 	m_tuningJoystick(nullptr),
-#ifdef PROTO_BOT_PINOUT
-	m_collinGyro(new Encoder(COLLIN_GYRO_A_DIN, COLLIN_GYRO_B_DIN,
-			false, CounterBase::k4X)),
-#else
 	m_austinGyro(new SPIGyro()),
-#endif
 	m_leftDriveVictor(nullptr),
 	m_rightDriveVictor(nullptr),
 	m_leftDriveEncoder(nullptr),
 	m_gyroEncoder(nullptr),
 	m_drive(nullptr),
-	m_sharedConveyorMotor(new VictorSP(SHOOTER_CONVEYER_MOTOR_PWM)),
 	m_intake(nullptr),
 	m_shooter(nullptr),
-	m_shooterStallFilter(new Debouncer(1.5)),
-	m_hanger(nullptr),
+	m_turret(nullptr),
 	m_airPressureSwitch(nullptr),
 	m_compressorRelay(nullptr),
 	m_compressor(nullptr),
@@ -58,7 +47,6 @@ Robot::Robot(void
 	m_state(nullptr),
 	m_messages(nullptr),
 	m_buttonPresses(nullptr),
-	m_poseManager(nullptr),
 	m_selectedRoutine(AutoRoutine::Go),
 	m_selectedDirection(AutoStartPosition::NoVision),
 	m_goBack(false),
@@ -84,16 +72,12 @@ Robot::Robot(void
 
 	m_logger = new LogSpreadsheet(this);
 	fprintf(stderr, "Starting drive init\n");
-#ifdef PROTO_BOT_PINOUT
-	m_drive = new Drive(this, m_leftDriveVictor, m_rightDriveVictor,
-			m_leftDriveEncoder, nullptr, m_collinGyro, m_logger);
-#else
 	m_drive = new Drive(this, m_leftDriveVictor, m_rightDriveVictor,
 			m_leftDriveEncoder, nullptr, m_austinGyro, m_logger);
-#endif
 	fprintf(stderr, "Finished drive init\n");
 
 	m_intake = new Intake(this);
+	m_turret = new Turret(this);
 
 	fprintf(stderr, "Finished intake init\n");
 	m_airPressureSwitch = new DigitalInput(AIR_PRESSURE_DIN);
@@ -113,13 +97,8 @@ Robot::Robot(void
 	m_logger->RegisterCell(m_buttonPresses);
 	fprintf(stderr, "Finished logger init\n");
 
-	m_shooter = new Shooter(this, m_logger, m_sharedConveyorMotor);
+	m_shooter = new Shooter(this, m_logger);
 	fprintf(stderr, "Finished shooter init\n");
-
-	m_hanger = new Hanger(this, m_drive, m_sharedConveyorMotor, m_shooter);
-
-    m_poseManager = new PoseManager(m_shooter, m_intake);
-	fprintf(stderr, "Finished poses init\n");
 }
 
 Robot::~Robot(void) {
@@ -147,32 +126,12 @@ void Robot::Initialize(void) {
 }
 
 void Robot::AllStateContinuous(void) {
-#ifdef PROTO_BOT_PINOUT
-	DBStringPrintf(DBStringPos::DB_LINE8, "cgyro %lf", m_collinGyro->GetDistance());
-#else
 	DBStringPrintf(DBStringPos::DB_LINE8, "agyro %lf", m_austinGyro->GetDegrees());
-#endif
-
-	//printf("gyro angle: %lf\n", m_austinGyro->GetDegreesPerSec());
 	DBStringPrintf(DBStringPos::DB_LINE5, "dist %lf", m_drive->GetLeftDist());
 
-	//DBStringPrintf(DBStringPos::DB_LINE8, "port 10 cur %lf", m_pdp->GetCurrent(10));
-
 	m_battery->LogPrintf("%f", DriverStation::GetInstance().GetBatteryVoltage());
-
 	m_time->LogDouble(GetSecTime());
 	m_state->LogPrintf("%s", GetRobotModeString());
-
-	double backFlywheelCurrent = m_pdp->GetCurrent(BACK_FLYWHEEL_PDB);
-
-	if (m_shooterStallFilter->Update(
-			backFlywheelCurrent > BACK_FLYWHEEL_STALL_CURRENT)) {
-		m_shooter->SetFlywheelEnabled(false);
-		DBStringPrintf(DBStringPos::DB_LINE0, "!STALL DETECTED!");
-	}
-
-	DBStringPrintf(DBStringPos::DB_LINE0, "bf %2.2lf",
-			backFlywheelCurrent);
 }
 void Robot::ObserveJoystickStateChange(uint32_t port, uint32_t button,
 			bool pressedP) {

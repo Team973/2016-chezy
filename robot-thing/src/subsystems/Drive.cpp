@@ -21,12 +21,7 @@
 namespace frc973 {
 
 Drive::Drive(TaskMgr *scheduler, VictorSP *left, VictorSP *right,
-			Encoder *leftEncoder, Encoder *rightEncoder,
-#ifdef PROTO_BOT_PINOUT
-			Encoder *gyro,
-#else
-			SPIGyro *gyro,
-#endif
+			Encoder *leftEncoder, Encoder *rightEncoder, SPIGyro *gyro,
 			LogSpreadsheet *logger
 			)
 		 : DriveBase(scheduler, this, this, nullptr)

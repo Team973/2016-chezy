@@ -4,10 +4,10 @@
 
 class VictorSP;
 class Accelerometer;
-//class ADXRS450_Gyro;
 class Encoder;
 class DigitalInput;
 class PowerDistributionPanel;
+class CANTalon;
 
 namespace frc973 {
 
@@ -16,12 +16,10 @@ class SingleThreadTaskMgr;
 class Drive;
 class Intake;
 class Shooter;
+class Turret;
 class GreyCompressor;
 class LogCell;
 class SPIGyro;
-class PoseManager;
-class Debouncer;
-class Hanger;
 
 class Robot:
 		public CoopMTRobot,
@@ -57,15 +55,13 @@ private:
 	Encoder			*m_leftDriveEncoder;
 	Encoder			*m_gyroEncoder;
 	Drive			*m_drive;
-	VictorSP		*m_sharedConveyorMotor;
 
 	/**
 	 * Subsystems
 	 */
 	Intake			*m_intake;
 	Shooter			*m_shooter;
-	Debouncer		*m_shooterStallFilter;
-	Hanger			*m_hanger;
+	Turret			*m_turret;
 
 	/*
 	 * Compressor
@@ -89,8 +85,6 @@ private:
 	LogCell *m_state;
 	LogCell *m_messages;
 	LogCell *m_buttonPresses;
-
-	PoseManager *m_poseManager;
 
 	double m_teleopTimeSec;
 public:

@@ -112,7 +112,7 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			break;
 		case DualAction::RightBumper:
 			if (pressedP) {
-				m_poseManager->AssumePose();
+				//m_poseManager->AssumePose();
 			}
 			break;
 		case DualAction::RightTrigger:
@@ -128,7 +128,7 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			}
 			break;
 		case DualAction::Start:
-			m_hanger->TryReleaseHooks();
+			//m_hanger->TryReleaseHooks();
 			break;
 		case DualAction::Back:
 			if (pressedP) {
@@ -140,24 +140,23 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		switch (button) {
 		case DualAction::BtnY:
 			if (pressedP) {
-				m_poseManager->ChooseNthPose(PoseManager::BATTER_SHOT_POSE);
+				//m_poseManager->ChooseNthPose(PoseManager::BATTER_SHOT_POSE);
 			}
 			break;
 		case DualAction::BtnA:
 			if (pressedP) {
-				m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
-				m_shooter->SetFlywheelEnabled(false);
+				//m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
+				m_shooter->SetFlywheelStart();
 			}
 			break;
 		case DualAction::BtnX:
 			if (pressedP) {
-				m_poseManager->ChooseNthPose(PoseManager::STOW_POSE);
-				m_shooter->SetFlywheelEnabled(false);
+				m_shooter->SetFlywheelStop();
 			}
 			break;
 		case DualAction::BtnB:
 			if (pressedP) {
-				m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+				//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			}
 			break;
 		case DualAction::LeftBumper:
@@ -192,13 +191,13 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			break;
 		case DualAction::DPadUpVirtBtn:
 			if (pressedP) {
-				m_shooter->SetFlywheelEnabled(true);
+				m_shooter->SetFlywheelStart();
 				DBStringPrintf(DBStringPos::DB_LINE0, "shooter enabled");
 			}
 			break;
 		case DualAction::DPadDownVirtBtn:
 			if (pressedP) {
-				m_shooter->SetFlywheelEnabled(false);
+				m_shooter->SetFlywheelStop();
 				DBStringPrintf(DBStringPos::DB_LINE0, "shooter disabled");
 			}
 			break;
@@ -209,10 +208,10 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_intake->SetIntakePosition(Intake::IntakePosition::retracted);
 			break;
 		case DualAction::Back:
-			m_hanger->SetManualHang(pressedP);
+			//m_hanger->SetManualHang(pressedP);
 			break;
 		case DualAction::Start:
-			m_hanger->SetAutoHang(pressedP);
+			//m_hanger->SetAutoHang(pressedP);
 			break;
 		}
 	}

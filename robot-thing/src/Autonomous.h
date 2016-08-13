@@ -101,13 +101,13 @@ void Robot::AutonomousContinuous(void) {
 void Robot::Flappers(void) {
 	switch(m_autoState){
 	case 0:
-		m_poseManager->ChooseNthPose(m_poseManager->CHIVAL_POSE);
+		//m_poseManager->ChooseNthPose(m_poseManager->CHIVAL_POSE);
 		m_drive->PIDDrive(42, Drive::RelativeTo::SetPoint, 0.6);
 		m_autoState++;
 		break;
 	case 1:
 		if (m_drive->OnTarget()){
-			m_poseManager->ChooseNthPose(m_poseManager->STOW_POSE);
+			//m_poseManager->ChooseNthPose(m_poseManager->STOW_POSE);
 			m_autoTimer = GetMsecTime();
 			m_autoState++;
 		}
@@ -121,7 +121,7 @@ void Robot::Flappers(void) {
 		break;
 	case 3:
 		if (GetMsecTime() - m_autoTimer >= 700){
-			m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			m_autoState++;
 
 			if (m_selectedDirection == NoVision) {
@@ -132,7 +132,7 @@ void Robot::Flappers(void) {
 	case 4:
 		if (m_drive->OnTarget()){
 			m_drive->PIDTurn(AutonomousTurn(m_selectedDirection), Drive::RelativeTo::Now);
-			m_shooter->SetFlywheelEnabled(true);
+			//m_shooter->SetFlywheelEnabled(true);
 			m_autoTimer = GetMsecTime();
 			m_autoState++;
 		}
@@ -161,7 +161,7 @@ void Robot::PortcullisAuto() {
 	switch (m_autoState){
 	case 0:
 		m_autoTimer = GetMsecTime();
-		m_poseManager->ChooseNthPose(m_poseManager->STOW_POSE);
+		//m_poseManager->ChooseNthPose(m_poseManager->STOW_POSE);
 		m_autoState ++;
 		break;
 	case 1:
@@ -182,8 +182,8 @@ void Robot::PortcullisAuto() {
 	case 3:
 		m_drive -> GetAngle();
 		m_drive->PIDTurn(AutonomousTurn(m_selectedDirection), Drive::RelativeTo::Now);
-		m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
-		m_shooter->SetFlywheelEnabled(true);
+		//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+		//m_shooter->SetFlywheelEnabled(true);
 		m_autoTimer = GetMsecTime();
 		m_autoState++;
 		break;
@@ -207,7 +207,7 @@ void Robot::PortcullisAuto() {
 		break;
 	case GO_BACK_START:
 		if (m_goBack == true){
-			m_poseManager->ChooseNthPose(PoseManager::STOW_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::STOW_POSE);
 			m_drive->PIDTurn(180, Drive::RelativeTo::Absolute);
 			m_autoState ++;
 		}
@@ -234,7 +234,7 @@ void Robot::Moat() {
 			m_autoState = POST_BALL_SNATCH;
 		}
 		else if (m_ballSnatch == true){
-			m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
 			m_intake->SetIntakePosition(Intake::IntakePosition::extended);
 			m_autoTimer = GetMsecTime();
 			m_autoState++;
@@ -252,12 +252,12 @@ void Robot::Moat() {
 		if (GetMsecTime() - m_autoTimer >= 1000){
 			m_shooter->SetConveyerPower(0.0);
 			m_intake->SetIntakeMode(Intake::IntakeMode::off);
-			m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			m_autoState = POST_BALL_SNATCH;
 		}
 		break;
 	case POST_BALL_SNATCH + 0:
-		m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
+		//m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
 		m_drive->SetGearing(Drive::DriveGearing::LowGear);
 		m_drive->PIDDrive(180 + AutonomousExtraDist(m_selectedDirection), Drive::RelativeTo::Now);
 		m_autoState++;
@@ -273,7 +273,7 @@ void Robot::Moat() {
 		break;
 	case POST_BALL_SNATCH + 2:
 		headingBeforeTurn = m_drive->GetAngle();
-		m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+		//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 		m_drive->PIDTurn(AutonomousTurn(m_selectedDirection), Drive::RelativeTo::Now);
 		m_autoTimer = GetMsecTime();
 		m_autoState ++;
@@ -285,7 +285,7 @@ void Robot::Moat() {
 		break;
 	case POST_BALL_SNATCH + 4:
 		m_autoTimer = GetMsecTime();
-		m_shooter->SetFlywheelEnabled(true);
+		//m_shooter->SetFlywheelEnabled(true);
 
 		m_autoState ++;
 		break;
@@ -312,7 +312,7 @@ void Robot::Moat() {
 	case GO_BACK_START:
 		if (m_goBack == true){
 			m_drive->PIDTurn(headingBeforeTurn, Drive::RelativeTo::Absolute);
-			m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
+//			m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
 			m_autoState ++;
 		}
 		else {
@@ -362,7 +362,7 @@ void Robot::DrawbridgeAuto() {
 			if (m_selectedDirection == AutoStartPosition::NoVision){
 				m_autoState += 100;
 			}
-			m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			break;
 		case 6:
 			if (m_drive->OnTarget()){
@@ -371,7 +371,7 @@ void Robot::DrawbridgeAuto() {
 			break;
 		case 7:
 			m_drive->SetVisionTargeting();
-			m_shooter->SetFlywheelEnabled(true);
+			//m_shooter->SetFlywheelEnabled(true);
 			m_autoState++;
 			break;
 		case 8:
@@ -424,7 +424,7 @@ void Robot::SallyPortAuto() {
 			if (m_selectedDirection == AutoStartPosition::NoVision){
 				m_autoState += 100;
 			}
-			m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+			//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			break;
 		case 7:
 			if (m_drive->OnTarget()){
@@ -433,7 +433,7 @@ void Robot::SallyPortAuto() {
 			break;
 		case 8:
 			m_drive->SetVisionTargeting();
-			m_shooter->SetFlywheelEnabled(true);
+			//m_shooter->SetFlywheelEnabled(true);
 			m_autoState++;
 			break;
 		case 9:
@@ -453,9 +453,9 @@ void Robot::SallyPortAuto() {
 void Robot::SpyBotAuto(){
 	switch (m_autoState){
 	case 0:
-		m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+		//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 		//m_arm->SetTargetPosition(Arm::ARM_POS_SHOOT);
-		m_shooter->SetFlywheelEnabled(true);
+		//m_shooter->SetFlywheelEnabled(true);
 		m_autoTimer = GetSecTime();
 		m_autoState ++;
 		break;

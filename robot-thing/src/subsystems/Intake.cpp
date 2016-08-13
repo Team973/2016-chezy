@@ -13,8 +13,8 @@
 namespace frc973 {
 
 Intake::Intake(TaskMgr *scheduler) :
-	m_intakeMotor(new VictorSP(BALL_INTAKE_MOTOR_PWM)),
-	m_intakeMotorB(new VictorSP(ARM_MOTOR_PWM)),
+	m_intakeMotor(new VictorSP(CROSS_INTAKE_MOTOR_PWM)),
+	m_intakeMotorB(new VictorSP(LOWER_CONVEYOR_MOTOR_PWM)),
 	m_intakeSolenoid(new Solenoid(INTAKE_EXTENSION_SOL)),
 	m_intakeMode(IntakeMode::off),
 	m_intakePosition(IntakePosition::retracted),
@@ -63,8 +63,8 @@ void Intake::TaskPeriodic(RobotMode mode) {
 		m_intakeMotorB->Set(-INTAKE_FORWARD_SPEED);
 		break;
 	case IntakeMode::reverse:
-		m_intakeMotor->Set(INTAKE_REVERSE_SPEED);
-		m_intakeMotorB->Set(-INTAKE_REVERSE_SPEED);
+		m_intakeMotor->Set(-INTAKE_REVERSE_SPEED);
+		m_intakeMotorB->Set(INTAKE_REVERSE_SPEED);
 		break;
 	case IntakeMode::manual:
 		break;
