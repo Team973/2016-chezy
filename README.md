@@ -1,11 +1,19 @@
-##Avilanche
+##Chezy champs 2016 student bot code
 
-###Directory structure
-`robot-thing` is the code for the robot
-`config` is the constants file that needs to get uploaded to the robot
-`testing` is full of unit tests
-I don't know what RemoteSystemTestFiles is and at this point I'm afraid to delete it :'(
+Copied from 2016-inseason code.  Will strip things down and make adjustments to account for difference in robot.
 
-Check out https://docs.google.com/spreadsheets/d/1-xnvGvEBZQoiElFn3bveuY1q_sN5FyVYaGp-GdQIggc/edit?usp=sharing for what might or might not be an up-to-date representation of the controls scheme
+###Where stuff is
 
-Be careful with your commit logs... they show up in the #programming slack channel now!
+Robot code is in robot-thing/src.
+
+Autonomous routines are defined in robot-thing/src/Autonomous.h
+
+Teleop controls are defined in robot-thing/src/Teleop.h
+
+Selecting an autonomous routine is done via the joystick in disabled mode so those controls are defined in robot-thing/src/Disabled.h
+
+Pin mappings are defined in robot-thing/src/RobotInfo.h
+
+Initialization code is in robot-thing/src/Robot.{cpp,h}
+
+Each subsystem has its own class defined in robot-thing/src/subsystems.  Usually these get instantiated in robot-thing/src/Robot.{cpp,h}
