@@ -6,7 +6,7 @@ namespace frc973 {
 void Robot::TeleopStart(void) {
 	m_teleopTimeSec = GetSecTime();
 	m_drive->ArcadeDrive(0.0, 0.0);
-	m_shooter->SetConveyerPower(0.0);
+	m_shooter->SetConveyorPower(0.0);
     printf("***teleop start\n");
 }
 
@@ -34,11 +34,11 @@ void Robot::TeleopContinuous(void) {
 	double conveyorPower = m_operatorJoystick->GetRawAxisWithDeadband(
 			DualAction::LeftXAxis, 0.2);
 	if (conveyorPower != 0.0) {
-		m_shooter->SetConveyerPower(conveyorPower);
+		m_shooter->SetConveyorPower(conveyorPower);
 		conveyorNeedsStop = true;
 	}
 	else if (conveyorNeedsStop) {
-		m_shooter->SetConveyerPower(0.0);
+		m_shooter->SetConveyorPower(0.0);
 		conveyorNeedsStop = false;
 	}
 	/*
@@ -85,7 +85,7 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::BtnX:
 			if (pressedP) {
 				teleopDrive = false;
-				m_drive->SetVisionTargeting();
+				//m_drive->SetVisionTargeting();
 				//m_drive->VelocityPIDTurn(1.0, DriveBase::RelativeTo::Now);
 				//closeGoal -= 50.0;
 				//m_shooter->SetBackFlywheelSSShoot(closeGoal);
@@ -118,12 +118,12 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::RightTrigger:
 			if (pressedP) {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
-				m_shooter->SetConveyerPower(0.8);
+				m_shooter->SetConveyorPower(0.8);
 				m_compressor->Disable();
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
-				m_shooter->SetConveyerPower(0.0);
+				m_shooter->SetConveyorPower(0.0);
 				m_compressor->Enable();
 			}
 			break;
@@ -172,21 +172,21 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::RightBumper:
 			if (pressedP) {
 				m_intake->SetIntakeMode(Intake::IntakeMode::forward);
-				m_shooter->SetConveyerPower(0.8);
+				m_shooter->SetConveyorPower(0.8);
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
-				m_shooter->SetConveyerPower(0.0);
+				m_shooter->SetConveyorPower(0.0);
 			}
 			break;
 		case DualAction::RightTrigger:
 			if (pressedP) {
 				m_intake->SetIntakeMode(Intake::IntakeMode::reverse);
-				m_shooter->SetConveyerPower(-0.8);
+				m_shooter->SetConveyorPower(-0.8);
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
-				m_shooter->SetConveyerPower(0.0);
+				m_shooter->SetConveyorPower(0.0);
 			}
 			break;
 		case DualAction::DPadUpVirtBtn:

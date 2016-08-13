@@ -14,7 +14,6 @@ class ArcadeDriveController;
 class CheesyDriveController;
 class PIDDriveController;
 class RampPIDDriveController;
-class PixyVisionDriveController;
 class VelocityTurnPID;
 class SPIGyro;
 class LogSpreadsheet;
@@ -83,8 +82,6 @@ public:
      * @param quickturn whether quickturn is active
      */
     void SetCheesyQuickTurn(bool quickturn);
-
-    void SetVisionTargeting();
 
     /*
      * Sets drive to use standard arcade drive controller if it doesn't already
@@ -173,7 +170,6 @@ private:
     CheesyDriveController *m_cheesyDriveController;
     PIDDriveController *m_pidDriveController;
     RampPIDDriveController *m_rampPidDriveController;
-    PixyVisionDriveController *m_visionDriveController;
     VelocityTurnPID *m_velocityTurnController;
 
     LogSpreadsheet *m_spreadsheet;

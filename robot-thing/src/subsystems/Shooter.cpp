@@ -10,12 +10,6 @@
 #include "lib/util/Util.h"
 #include "lib/WrapDash.h"
 #include "lib/TaskMgr.h"
-#include "lib/filters/BullshitFilter.h"
-#include "lib/filters/MovingAverageFilter.h"
-#include "lib/filters/MedianFilter.h"
-#include "lib/filters/CascadingFilter.h"
-#include "lib/filters/DelaySwitch.h"
-#include "lib/filters/PID.h"
 #include "lib/logging/LogSpreadsheet.h"
 
 namespace frc973 {
@@ -47,6 +41,10 @@ void Shooter::SetFlywheelStart() {
 void Shooter::SetFlywheelStop() {
 	m_flywheelEnabled = false;
 	printf("stop flywheel\n");
+}
+
+void Shooter::SetConveyorPower(double pow) {
+	m_conveyor->Set(pow);
 }
 
 void Shooter::TaskPeriodic(RobotMode mode) {

@@ -15,7 +15,6 @@
 #include "src/controllers/CheesyDriveController.h"
 #include "src/controllers/PIDDriveController.h"
 #include "src/controllers/RampedPIDDriveController.h"
-#include "src/controllers/PixyVisionDriveController.h"
 #include "src/controllers/VelocityTurnPID.h"
 
 namespace frc973 {
@@ -40,7 +39,6 @@ Drive::Drive(TaskMgr *scheduler, VictorSP *left, VictorSP *right,
 		 , m_cheesyDriveController(nullptr)
 		 , m_pidDriveController(nullptr)
 		 , m_rampPidDriveController(nullptr)
-		 , m_visionDriveController(nullptr)
 		 , m_velocityTurnController(nullptr)
 		 , m_spreadsheet(logger)
 		 , m_angleLog(new LogCell("Angle"))
@@ -67,8 +65,6 @@ Drive::Drive(TaskMgr *scheduler, VictorSP *left, VictorSP *right,
 	fprintf(stderr, "starting ramped pid\n");
 	m_rampPidDriveController = new RampPIDDriveController();
 	fprintf(stderr, "starting pixy\n");
-	m_visionDriveController = new PixyVisionDriveController();
-	fprintf(stderr, "starting velocity turn\n");
 	m_velocityTurnController = new VelocityTurnPID();
 
 	this->SetDriveController(m_arcadeDriveController);
@@ -117,10 +113,6 @@ void Drive::CheesyDrive(double throttle, double turn) {
 
 void Drive::SetCheesyQuickTurn(bool quickturn) {
 	m_cheesyDriveController->SetQuickTurn(quickturn);
-}
-
-void Drive::SetVisionTargeting() {
-	this->SetDriveController(m_visionDriveController);
 }
 
 void Drive::ArcadeDrive(double throttle, double turn) {

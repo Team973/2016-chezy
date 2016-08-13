@@ -147,7 +147,7 @@ void Robot::Flappers(void) {
 		break;
 	case 6:
 		if (m_drive->OnTarget() && GetMsecTime() - m_autoTimer >= 3000){
-			m_shooter->SetConveyerPower(1.0);
+			m_shooter->SetConveyorPower(1.0);
 
 			m_autoState ++;
 		}
@@ -202,7 +202,7 @@ void Robot::PortcullisAuto() {
 		}
 		break;
 	case 7:
-		m_shooter->SetConveyerPower(1.0);
+		m_shooter->SetConveyorPower(1.0);
 		m_autoState++;
 		break;
 	case GO_BACK_START:
@@ -243,14 +243,14 @@ void Robot::Moat() {
 	case 1:
 		if (GetMsecTime() - m_autoTimer >= 700){
 			m_intake->SetIntakeMode(Intake::IntakeMode::forward);
-			m_shooter->SetConveyerPower(1.0);
+			m_shooter->SetConveyorPower(1.0);
 			m_autoTimer = GetMsecTime();
 			m_autoState++;
 		}
 		break;
 	case 2:
 		if (GetMsecTime() - m_autoTimer >= 1000){
-			m_shooter->SetConveyerPower(0.0);
+			m_shooter->SetConveyorPower(0.0);
 			m_intake->SetIntakeMode(Intake::IntakeMode::off);
 			//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
 			m_autoState = POST_BALL_SNATCH;
@@ -300,7 +300,7 @@ void Robot::Moat() {
 		}
 		break;
 	case POST_BALL_SNATCH + 7:
-		m_shooter->SetConveyerPower(1.0);
+		m_shooter->SetConveyorPower(1.0);
 		m_autoTimer = GetMsecTime();
 		m_autoState++;
 		break;
@@ -380,7 +380,7 @@ void Robot::DrawbridgeAuto() {
 			}
 			break;
 		case 9:
-			m_shooter->SetConveyerPower(1.0);
+			m_shooter->SetConveyorPower(1.0);
 			m_autoState++;
 			break;
 		default:
@@ -442,7 +442,7 @@ void Robot::SallyPortAuto() {
 			}
 			break;
 		case 10:
-			m_shooter->SetConveyerPower(1.0);
+			m_shooter->SetConveyorPower(1.0);
 			m_autoState++;
 			break;
 		default:
@@ -465,7 +465,7 @@ void Robot::SpyBotAuto(){
 		}
 		break;
 	case 2:
-		m_shooter->SetConveyerPower(1.0);
+		m_shooter->SetConveyorPower(1.0);
 		break;
 	}
 }

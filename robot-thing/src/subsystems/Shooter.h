@@ -42,7 +42,7 @@ public:
 	void SetFlywheelStart();
 	void SetFlywheelStop();
 
-	void SetConveyerPower(double pow);
+	void SetConveyorPower(double pow);
 
 	void TaskPeriodic(RobotMode mode);
 
