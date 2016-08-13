@@ -42,6 +42,7 @@ double Turret::GetTurretPosition() {
 }
 
 void Turret::SetTurretPower(double pow) {
+	m_autoTargetEnabled = false;
 	m_turretMotor->SetControlMode(CANTalon::ControlMode::kPercentVbus);
 	m_turretMotor->Set(pow);
 }

@@ -140,23 +140,30 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		switch (button) {
 		case DualAction::BtnY:
 			if (pressedP) {
-				//m_poseManager->ChooseNthPose(PoseManager::BATTER_SHOT_POSE);
+				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
+				m_turret->SetTurretPosition(0.0);
+				m_shooter->SetFlywheelStart();
 			}
 			break;
 		case DualAction::BtnA:
 			if (pressedP) {
-				//m_poseManager->ChooseNthPose(PoseManager::CHIVAL_POSE);
+				m_shooter->SetShooterHeight(Shooter::ShooterHeight::high);
+				m_turret->SetTurretPosition(0.0);
 				m_shooter->SetFlywheelStart();
 			}
 			break;
 		case DualAction::BtnX:
 			if (pressedP) {
-				m_shooter->SetFlywheelStop();
+				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
+				m_turret->SetTurretPosition(-75.0);
+				m_shooter->SetFlywheelStart();
 			}
 			break;
 		case DualAction::BtnB:
 			if (pressedP) {
-				//m_poseManager->ChooseNthPose(PoseManager::NEAR_DEFENSE_SHOT_POSE);
+				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
+				m_turret->SetTurretPosition(75.0);
+				m_shooter->SetFlywheelStart();
 			}
 			break;
 		case DualAction::LeftBumper:
@@ -208,10 +215,10 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_intake->SetIntakePosition(Intake::IntakePosition::retracted);
 			break;
 		case DualAction::Back:
-			//m_hanger->SetManualHang(pressedP);
+			m_turret->SetTurretAutoTarget(false);
 			break;
 		case DualAction::Start:
-			//m_hanger->SetAutoHang(pressedP);
+			m_turret->SetTurretAutoTarget(true);
 			break;
 		}
 	}
