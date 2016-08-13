@@ -126,8 +126,9 @@ void Robot::Initialize(void) {
 }
 
 void Robot::AllStateContinuous(void) {
-	DBStringPrintf(DBStringPos::DB_LINE8, "agyro %lf", m_austinGyro->GetDegrees());
+	DBStringPrintf(DBStringPos::DB_LINE8, "pixy %lf", m_turret->m_offsetInput->GetVoltage());
 	DBStringPrintf(DBStringPos::DB_LINE5, "dist %lf", m_drive->GetLeftDist());
+	DBStringPrintf(DBStringPos::DB_LINE7, "dist %lf", m_turret->GetTurretPosition());
 
 	m_battery->LogPrintf("%f", DriverStation::GetInstance().GetBatteryVoltage());
 	m_time->LogDouble(GetSecTime());

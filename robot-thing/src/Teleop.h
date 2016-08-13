@@ -17,6 +17,7 @@ void Robot::TeleopStop(void) {
 static bool teleopDrive = true;
 static bool conveyorNeedsStop = false;
 static bool intakeNeedsStop = false;
+static bool turretManualControl = true;
 
 void Robot::TeleopContinuous(void) {
 	double intakePower = m_operatorJoystick->GetRawAxisWithDeadband(
@@ -47,6 +48,16 @@ void Robot::TeleopContinuous(void) {
 			m_driverJoystick->GetRawButton(DualAction::RightBumper));
 			*/
 
+	double turretControlPower = m_operatorJoystick->GetRawAxisWithDeadband(
+			DualAction::RightXAxis, 0.2);
+	if (Util::abs(turretControlPower) > 0.5) {
+		turretManualControl = true;
+		m_turret->SetTurretAutoTarget(false);
+	}
+	if (turretManualControl  == true){
+		m_turret->SetTurretPower(turretControlPower * 0.5);
+	}
+
 	double y = m_driverJoystick->GetRawAxis(DualAction::LeftYAxis);
 	double x = -m_driverJoystick->GetRawAxis(DualAction::RightXAxis);
 
@@ -56,7 +67,7 @@ void Robot::TeleopContinuous(void) {
 			x *= 0.4;
 		}
 
-		m_drive->ArcadeDrive(y, -x);
+		m_drive->ArcadeDrive(y, x);
 	}
 
  	/*
@@ -143,6 +154,8 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
 				m_turret->SetTurretPosition(0.0);
 				m_shooter->SetFlywheelStart();
+				m_turret->SetTurretAutoTarget(true);
+				turretManualControl = false;
 			}
 			break;
 		case DualAction::BtnA:
@@ -150,20 +163,28 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 				m_shooter->SetShooterHeight(Shooter::ShooterHeight::high);
 				m_turret->SetTurretPosition(0.0);
 				m_shooter->SetFlywheelStart();
+				m_turret->SetTurretAutoTarget(true);
+				turretManualControl = false;
 			}
 			break;
 		case DualAction::BtnX:
 			if (pressedP) {
 				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
-				m_turret->SetTurretPosition(-75.0);
+				m_turret->SetTurretPosition(75.0);
 				m_shooter->SetFlywheelStart();
+				m_turret->SetTurretAutoTarget(true);
+				turretManualControl = false;
+
 			}
 			break;
 		case DualAction::BtnB:
 			if (pressedP) {
 				m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
-				m_turret->SetTurretPosition(75.0);
+				m_turret->SetTurretPosition(-75.0);
 				m_shooter->SetFlywheelStart();
+				m_turret->SetTurretAutoTarget(true);
+				turretManualControl = false;
+
 			}
 			break;
 		case DualAction::LeftBumper:
@@ -179,11 +200,9 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::RightBumper:
 			if (pressedP) {
 				m_intake->SetIntakeMode(Intake::IntakeMode::forward);
-				m_shooter->SetConveyorPower(0.8);
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
-				m_shooter->SetConveyorPower(0.0);
 			}
 			break;
 		case DualAction::RightTrigger:
@@ -218,7 +237,12 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_turret->SetTurretAutoTarget(false);
 			break;
 		case DualAction::Start:
-			m_turret->SetTurretAutoTarget(true);
+			if (pressedP) {
+				m_shooter->SetConveyorPower(1.0);
+			}
+			else {
+				m_shooter->SetConveyorPower(0.0);
+			}
 			break;
 		}
 	}

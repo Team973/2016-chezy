@@ -56,7 +56,7 @@ void Turret::SetTurretAutoTarget(bool autoTargetEnabled) {
 	m_autoTargetEnabled = autoTargetEnabled;
 
 	if (m_autoTargetEnabled) {
-		m_turretMotor->SetControlMode(CANTalon::ControlMode::kSpeed);
+		m_turretMotor->SetControlMode(CANTalon::ControlMode::kPercentVbus);
 		m_turretMotor->Set(0.0);
 	}
 	else {
@@ -69,7 +69,8 @@ void Turret::TaskPeriodic(RobotMode mode) {
 	if (m_autoTargetEnabled) {
 		if (m_targetFoundInput->Get()) {
 			double offset = -(m_offsetInput->GetVoltage() - (3.3 / 2));
-			m_turretMotor->Set(offset);
+			m_turretMotor->Set(offset * -0.5);
+			printf("Setting speed setpoint on turret\n");
 		}
 	}
 }

@@ -59,11 +59,11 @@ void Intake::TaskPeriodic(RobotMode mode) {
 		m_intakeMotorB->Set(0.0);
 		break;
 	case IntakeMode::forward:
-		m_intakeMotor->Set(INTAKE_FORWARD_SPEED);
+		m_intakeMotor->Set(-INTAKE_FORWARD_SPEED);
 		m_intakeMotorB->Set(-INTAKE_FORWARD_SPEED);
 		break;
 	case IntakeMode::reverse:
-		m_intakeMotor->Set(-INTAKE_REVERSE_SPEED);
+		m_intakeMotor->Set(INTAKE_REVERSE_SPEED);
 		m_intakeMotorB->Set(INTAKE_REVERSE_SPEED);
 		break;
 	case IntakeMode::manual:

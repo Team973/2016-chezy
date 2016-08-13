@@ -31,7 +31,9 @@ public:
 private:
 	CANTalon *m_turretMotor;
 	bool m_autoTargetEnabled;
+public:
 	AnalogInput *m_offsetInput;
+private:
 	DigitalInput *m_targetFoundInput;
 	TaskMgr *m_scheduler;
 };
