@@ -187,6 +187,14 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 
 			}
 			break;
+		case DualAction::RYAxisVirtButton:
+			if (pressedP == false) {
+				m_turret->SetTurretAutoTarget(false);
+			}
+			else {
+				m_turret->SetTurretAutoTarget(false);
+			}
+			break;
 		case DualAction::LeftBumper:
 			if (pressedP) {
 				m_intake->SetIntakePosition(Intake::IntakePosition::extended);
