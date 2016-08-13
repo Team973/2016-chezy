@@ -139,7 +139,7 @@ void Robot::Flappers(void) {
 		break;
 	case 5:
 		if (m_drive->OnTarget() || GetMsecTime() - m_autoTimer > 2000) {
-			m_drive->SetVisionTargeting();
+			//m_drive->SetVisionTargeting();
 
 			m_autoTimer = GetMsecTime();
 			m_autoState ++;
@@ -193,7 +193,7 @@ void Robot::PortcullisAuto() {
 		}
 		break;
 	case 5:
-		m_drive->SetVisionTargeting();
+		//m_drive->SetVisionTargeting();
 		m_autoState++;
 		break;
 	case 6:
@@ -290,7 +290,7 @@ void Robot::Moat() {
 		m_autoState ++;
 		break;
 	case POST_BALL_SNATCH + 5:
-		m_drive->SetVisionTargeting();
+		//m_drive->SetVisionTargeting();
 		m_autoState++;
 		m_autoTimer = GetMsecTime();
 		break;
@@ -370,7 +370,7 @@ void Robot::DrawbridgeAuto() {
 			}
 			break;
 		case 7:
-			m_drive->SetVisionTargeting();
+			//m_drive->SetVisionTargeting();
 			//m_shooter->SetFlywheelEnabled(true);
 			m_autoState++;
 			break;
@@ -432,7 +432,7 @@ void Robot::SallyPortAuto() {
 			}
 			break;
 		case 8:
-			m_drive->SetVisionTargeting();
+			//m_drive->SetVisionTargeting();
 			//m_shooter->SetFlywheelEnabled(true);
 			m_autoState++;
 			break;
