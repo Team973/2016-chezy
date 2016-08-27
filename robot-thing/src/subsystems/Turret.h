@@ -17,6 +17,12 @@ class TaskMgr;
 
 class Turret: public CoopTask {
 public:
+
+	enum class Flashlight{
+		on,
+		off
+	};
+
 	Turret(TaskMgr *scheduler);
 	virtual ~Turret();
 
@@ -26,6 +32,7 @@ public:
 	void SetTurretPower(double pow);
 	bool TurretOnTarget();
 	void SetTurretAutoTarget(bool autoTargetEnabled);
+	void SetTurretMode(Flashlight newMode);
 
 	void TaskPeriodic(RobotMode mode);
 private:
@@ -36,6 +43,9 @@ public:
 private:
 	DigitalInput *m_targetFoundInput;
 	TaskMgr *m_scheduler;
+	Solenoid *m_greenFlashlight;
+	Solenoid *m_manualFlashlight;
+	Flashlight *m_flashlightMode;
 };
 
 }

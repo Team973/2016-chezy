@@ -20,6 +20,9 @@ Turret::Turret(TaskMgr *scheduler)
 		, m_offsetInput(new AnalogInput(PIXY_CAM_ANALOG_PORT))
 		, m_targetFoundInput(new DigitalInput(PIXY_CAM_DIGITAL_PORT))
 		, m_scheduler(scheduler)
+		, m_greenFlashlight(new Solenoid(GREEN_FLASHLIGHT))
+		, m_manualFlashlight(new Solenoid(MANUAL_FLASHLIGHT))
+		, m_flashlightMode (Flashlight::on)
 {
 	m_scheduler->RegisterTask("Shooter", this, TASK_PERIODIC);
 	m_turretMotor->SetFeedbackDevice(CANTalon::FeedbackDevice::QuadEncoder);
@@ -58,11 +61,27 @@ void Turret::SetTurretAutoTarget(bool autoTargetEnabled) {
 	if (m_autoTargetEnabled) {
 		m_turretMotor->SetControlMode(CANTalon::ControlMode::kPercentVbus);
 		m_turretMotor->Set(0.0);
-	}
+
+		}
 	else {
 		m_turretMotor->SetControlMode(CANTalon::ControlMode::kPercentVbus);
 		m_turretMotor->Set(0.0);
 	}
+}
+
+void Turret::SetTurretMode(Flashlight newMode) {
+	if (newMode != m_flashlightMode) {
+		switch (newMode) {
+		case Flashlight::off:
+			m_manualFlashlight->Set(false);
+			break;
+		case Flashlight::on:
+			m_manualFlashlight->Set(true);
+			break;
+		}
+	}
+
+	m_flashlightMode = newMode;
 }
 
 void Turret::TaskPeriodic(RobotMode mode) {

@@ -183,8 +183,8 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 				m_turret->SetTurretPosition(-75.0);
 				m_shooter->SetFlywheelStart();
 				m_turret->SetTurretAutoTarget(true);
+				m_turret->SetTurretMode(Turret::Flashlight::on);
 				turretManualControl = false;
-
 			}
 			break;
 		case DualAction::RYAxisVirtButton:

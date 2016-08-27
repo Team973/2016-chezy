@@ -69,6 +69,9 @@ constexpr int DRIVE_SHIFT_SOL = 2;
 constexpr int POWER_TAKEOFF_SOL_A = 2;
 constexpr int POWER_TAKEOFF_SOL_B = 5;
 
+constexpr int GREEN_FLASHLIGHT = 7;
+constexpr int MANUAL_FLASHLIGHT = 5;
+
 /**
  * Power Distrobution Channels
  * (only the ones we care about)
