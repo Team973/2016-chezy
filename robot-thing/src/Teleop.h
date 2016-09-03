@@ -174,7 +174,6 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 				m_shooter->SetFlywheelStart();
 				m_turret->SetTurretAutoTarget(true);
 				turretManualControl = false;
-
 			}
 			break;
 		case DualAction::BtnB:

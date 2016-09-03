@@ -47,10 +47,8 @@ Robot::Robot(void
 	m_state(nullptr),
 	m_messages(nullptr),
 	m_buttonPresses(nullptr),
-	m_selectedRoutine(AutoRoutine::Go),
-	m_selectedDirection(AutoStartPosition::NoVision),
-	m_goBack(false),
-	m_ballSnatch(false)
+	m_autoDistance(AutoDistance::near),
+	m_autoShooterHeight(AutoShooterHeight::low)
 {
 	printf("Starting robot init\n");fflush(stdout);
 	//m_hiFreq = new SingleThreadTaskMgr(*this, 1.0 / 2.0);

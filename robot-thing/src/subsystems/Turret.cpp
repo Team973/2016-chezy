@@ -20,15 +20,17 @@ Turret::Turret(TaskMgr *scheduler)
 		, m_offsetInput(new AnalogInput(PIXY_CAM_ANALOG_PORT))
 		, m_targetFoundInput(new DigitalInput(PIXY_CAM_DIGITAL_PORT))
 		, m_scheduler(scheduler)
-		, m_greenFlashlight(new Solenoid(GREEN_FLASHLIGHT))
+		, m_greenFlashlight(new Solenoid(1, GREEN_FLASHLIGHT))
 		, m_manualFlashlight(new Solenoid(MANUAL_FLASHLIGHT))
 		, m_flashlightMode (Flashlight::on)
+		, m_flashlightStarted(false)
 {
 	m_scheduler->RegisterTask("Shooter", this, TASK_PERIODIC);
 	m_turretMotor->SetFeedbackDevice(CANTalon::FeedbackDevice::QuadEncoder);
 	m_turretMotor->SetSensorDirection(true);
 	m_turretMotor->ConfigForwardLimit(80.0 * CLICKS_PER_DEGREE);
 	m_turretMotor->ConfigReverseLimit(-80.0 * CLICKS_PER_DEGREE);
+	m_greenFlashlight->Set(true);
 }
 
 Turret::~Turret() {
@@ -85,6 +87,10 @@ void Turret::SetTurretMode(Flashlight newMode) {
 }
 
 void Turret::TaskPeriodic(RobotMode mode) {
+	if (!m_flashlightStarted) {
+		m_flashlightStarted = true;
+		m_greenFlashlight->Set(true);
+	}
 	if (m_autoTargetEnabled) {
 		if (m_targetFoundInput->Get()) {
 			double offset = -(m_offsetInput->GetVoltage() - (3.3 / 2));

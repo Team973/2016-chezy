@@ -46,6 +46,7 @@ private:
 	Solenoid *m_greenFlashlight;
 	Solenoid *m_manualFlashlight;
 	Flashlight m_flashlightMode;
+	bool m_flashlightStarted;
 };
 
 }

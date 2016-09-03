@@ -79,8 +79,11 @@ void PIDDriveController::CalcDriveOutput(DriveStateProvider *state,
 
 	out->SetDriveOutput(throttle + turn, throttle - turn);
 
-	if ((m_distEnabled == false || (Util::abs(m_targetDist - m_prevDist) < 2.0 && Util::abs(state->GetRate()) < 0.5)) &&
-			Util::abs(m_targetAngle - m_prevAngle) < 2.0 && Util::abs(state->GetAngularRate()) < 1.0) {
+	if ((m_distEnabled == false || (Util::abs(m_targetDist - m_prevDist) < 3.0
+			                          && Util::abs(state->GetRate()) < 0.5))
+			                          && Util::abs(m_targetAngle - m_prevAngle) < 2.0
+									  && Util::abs(state->GetAngularRate()) < 1.0
+									  ) {
 		m_onTarget = true;
 	}
 	else {

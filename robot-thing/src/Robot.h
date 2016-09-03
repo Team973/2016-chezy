@@ -109,13 +109,14 @@ public:
 	void AutonomousStop(void) override;
 	void AutonomousContinuous(void) override;
 
-	void TurnTest(void);
-	void Flappers(void);
-	void PortcullisAuto(void);
-	void Moat(void);
-	void SallyPortAuto(void);
-	void DrawbridgeAuto(void);
-	void SpyBotAuto (void);
+	enum class AutoDistance {
+		reallyNear, near, middle, far
+	};
+	AutoDistance m_autoDistance;
+	enum class AutoShooterHeight {
+		high, low
+	};
+	AutoShooterHeight m_autoShooterHeight;
 
 	/**
 	 * Defined in Teleop.h
@@ -135,16 +136,6 @@ public:
 	void HandleDisabledButton(uint32_t port, uint32_t button,
 			bool newState);
 
-	enum AutoRoutine{
-		Portcullis, ChevaldeFrise, Drawbridge, SallyPort, Go, NoAuto, SpyBot
-	};
-	enum AutoStartPosition {
-		Pos2, Pos3, Pos4, Pos5, NoVision
-	};
-	AutoRoutine m_selectedRoutine;
-	AutoStartPosition m_selectedDirection;
-	bool m_goBack;
-	bool m_ballSnatch;
 	/**
 	 * Defined in Test.h
 	 */
