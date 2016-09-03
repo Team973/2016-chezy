@@ -45,7 +45,7 @@ private:
 	TaskMgr *m_scheduler;
 	Solenoid *m_greenFlashlight;
 	Solenoid *m_manualFlashlight;
-	Flashlight *m_flashlightMode;
+	Flashlight m_flashlightMode;
 };
 
 }
