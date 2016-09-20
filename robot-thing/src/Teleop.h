@@ -128,7 +128,7 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			break;
 		case DualAction::RightTrigger:
 			if (pressedP) {
-				m_intake->SetIntakeMode(Intake::IntakeMode::off);
+				m_intake->SetIntakeMode(Intake::IntakeMode::forward);
 				m_shooter->SetConveyorPower(0.8);
 				m_compressor->Disable();
 			}
@@ -241,15 +241,10 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_intake->SetIntakePosition(Intake::IntakePosition::retracted);
 			break;
 		case DualAction::Back:
-			m_turret->SetTurretAutoTarget(false);
+			m_hanger->SetManualHang(pressedP);
 			break;
 		case DualAction::Start:
-			if (pressedP) {
-				m_shooter->SetConveyorPower(1.0);
-			}
-			else {
-				m_shooter->SetConveyorPower(0.0);
-			}
+			m_hanger->SetAutoHang(pressedP);
 			break;
 		}
 	}

@@ -34,6 +34,7 @@ constexpr int CROSS_INTAKE_MOTOR_PWM = 9;
  * CAN bus riders
  */
 constexpr int SHOOTER_TURRET_CAN_ID = 2;
+constexpr int HANGER_CRANK_CAN_ID = 3;
 
 /**
  * DIN pin-out

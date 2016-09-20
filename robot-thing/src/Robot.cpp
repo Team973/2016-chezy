@@ -11,6 +11,7 @@
 #include "subsystems/Shooter.h"
 #include "subsystems/Drive.h"
 #include "subsystems/Turret.h"
+#include "subsystems/Hanger.h"
 
 namespace frc973 {
 
@@ -36,6 +37,7 @@ Robot::Robot(void
 	m_intake(nullptr),
 	m_shooter(nullptr),
 	m_turret(nullptr),
+	m_hanger(nullptr),
 	m_airPressureSwitch(nullptr),
 	m_compressorRelay(nullptr),
 	m_compressor(nullptr),
@@ -76,6 +78,7 @@ Robot::Robot(void
 
 	m_intake = new Intake(this);
 	m_turret = new Turret(this);
+	m_hanger = new Hanger(this, m_drive);
 
 	fprintf(stderr, "Finished intake init\n");
 	m_airPressureSwitch = new DigitalInput(AIR_PRESSURE_DIN);

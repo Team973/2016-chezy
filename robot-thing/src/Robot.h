@@ -20,6 +20,7 @@ class Turret;
 class GreyCompressor;
 class LogCell;
 class SPIGyro;
+class Hanger;
 
 class Robot:
 		public CoopMTRobot,
@@ -62,6 +63,7 @@ private:
 	Intake			*m_intake;
 	Shooter			*m_shooter;
 	Turret			*m_turret;
+	Hanger			*m_hanger;
 
 	/*
 	 * Compressor
