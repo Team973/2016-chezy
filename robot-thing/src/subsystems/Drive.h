@@ -179,6 +179,8 @@ private:
     LogCell *m_leftDistRateLog;
     LogCell *m_leftPowerLog;
     LogCell *m_rightPowerLog;
+
+    static constexpr double DRIVE_POWER_SCALAR = 0.8;
 };
 
 }

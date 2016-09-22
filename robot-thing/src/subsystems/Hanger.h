@@ -23,36 +23,21 @@ class Shooter;
 class Hanger : public CoopTask {
 public:
 	enum HangerState {
-		PreHanging,		//Before hanging
-		AutoHanging,	//Hanging automatically (listening to halls)
-		ManualHanging,	//Hanging manually
-		PostHanging		//Hanging but not sending power
+		up,
+		down,
+		stop
 	};
 
 	Hanger(TaskMgr *scheduler, Drive *drive);
 	virtual ~Hanger();
 
-	/**
-	 * Release hooks and start moving the crank to a specified position using
-	 * closed loop control
-	 *
-	 * @param hang, true to start auto hang sequence, false to stop it
-	 */
-	void SetAutoHang(bool hang);
-
-	/**
-	 * Release hooks and move the crank with open loop full blast
-	 *
-	 * @param hang, true to start manual hang sequence, false to stop it
-	 */
-	void SetManualHang(bool hang);
+	void SetHangerState(HangerState state);
 
 	/**
 	 * Release the hooks if they haven't already been released
 	 * If they have been released, just do nothing (don't spam them)
 	 */
 	void TryReleaseHooks();
-
 private:
 
 	void TaskPeriodic(RobotMode mode);

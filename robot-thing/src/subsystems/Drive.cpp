@@ -33,8 +33,8 @@ Drive::Drive(TaskMgr *scheduler, VictorSP *left, VictorSP *right,
 		 , m_rightPower(0.0)
 		 , m_leftMotor(left)
 		 , m_rightMotor(right)
-		 , m_leftMotorPowerFilter(dynamic_cast<FilterBase*>(new RampedOutput(10.0)))
-		 , m_rightMotorPowerFilter(dynamic_cast<FilterBase*>(new RampedOutput(10.0)))
+		 , m_leftMotorPowerFilter(dynamic_cast<FilterBase*>(new RampedOutput(4.0)))
+		 , m_rightMotorPowerFilter(dynamic_cast<FilterBase*>(new RampedOutput(4.0)))
 		 , m_arcadeDriveController(nullptr)
 		 , m_cheesyDriveController(nullptr)
 		 , m_pidDriveController(nullptr)
@@ -202,9 +202,11 @@ void Drive::SetDriveOutput(double left, double right) {
 	}
 	else {
 		m_leftMotor->Set(
+				DRIVE_POWER_SCALAR *
 				m_leftMotorPowerFilter->Update(
 						Util::bound(-m_leftPower, -1.0, 1.0)));
 		m_rightMotor->Set(
+				DRIVE_POWER_SCALAR *
 				m_rightMotorPowerFilter->Update(
 						Util::bound(-m_rightPower, -1.0, 1.0)));
 	}

@@ -27,7 +27,7 @@ Hanger::Hanger(TaskMgr *scheduler, Drive *drive)
 		 , m_rightHookSensor(new DigitalInput(RIGHT_HOOK_HALL_DIN))
 		 , m_hooksReleased(false)
 		 , m_everSeenSwitch(false)
-		 , m_state(HangerState::PreHanging) {
+		 , m_state(HangerState::stop) {
 	m_scheduler->RegisterTask("Hanger", this, TASK_PERIODIC);
 
 	m_ptoRelease->Set(DoubleSolenoid::Value::kReverse);
@@ -37,31 +37,15 @@ Hanger::~Hanger() {
 	m_scheduler->UnregisterTask(this);
 }
 
-void Hanger::SetAutoHang(bool enabledP) {
-	TryReleaseHooks();
-
-	if (enabledP && m_state == HangerState::PreHanging) {
-		TryReleaseHooks();
-	}
-	else if (enabledP) {
-		m_state = HangerState::AutoHanging;
-	}
-	else {
-		m_state = HangerState::PostHanging;
-	}
-}
-
-void Hanger::SetManualHang(bool enabledP) {
-	TryReleaseHooks();
-
-	if (enabledP && m_state == HangerState::PreHanging) {
-		TryReleaseHooks();
-	}
-	else if (enabledP) {
-		m_state = HangerState::ManualHanging;
-	}
-	else {
-		m_state = HangerState::PostHanging;
+void Hanger::SetHangerState(HangerState state) {
+	switch (state) {
+	case HangerState::up:
+	case HangerState::down:
+		if (!m_hooksReleased) {
+			TryReleaseHooks();
+		}
+	case HangerState::stop:
+		m_state = state;
 	}
 }
 
@@ -81,23 +65,13 @@ void Hanger::TaskPeriodic(RobotMode mode) {
 			(!m_rightHookSensor->Get()? "hit" : "mis"));
 
 	switch (m_state) {
-	case HangerState::PreHanging:
-		//Don't do anything
-		break;
-	case HangerState::AutoHanging:
-		if (!m_leftHookSensor->Get() || !m_rightHookSensor->Get() || m_everSeenSwitch) {
-			m_crankMotor->Set(0.0);
-			m_state = PostHanging;
-			m_everSeenSwitch = true;
-		}
-		else {
-			m_crankMotor->Set(DEFAULT_HANG_POWER);
-		}
-		break;
-	case HangerState::ManualHanging:
+	case HangerState::up:
 		m_crankMotor->Set(DEFAULT_HANG_POWER);
 		break;
-	case HangerState::PostHanging:
+	case HangerState::down:
+		m_crankMotor->Set(-DEFAULT_HANG_POWER);
+		break;
+	case HangerState::stop:
 		m_crankMotor->Set(0.0);
 		break;
 	}

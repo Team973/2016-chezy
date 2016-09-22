@@ -93,9 +93,10 @@ void Turret::TaskPeriodic(RobotMode mode) {
 	}
 	if (m_autoTargetEnabled) {
 		if (m_targetFoundInput->Get()) {
-			double offset = -(m_offsetInput->GetVoltage() - (3.3 / 2));
-			m_turretMotor->Set(offset * -0.5);
-			printf("Setting speed setpoint on turret\n");
+			double offset = (m_offsetInput->GetVoltage() - (3.3 / 2));
+			double power = Util::signedIncrease(offset * 0.5, 0.05);
+			m_turretMotor->Set(power);
+			printf("turr offset %f pow %f\n", offset, power);
 		}
 	}
 }

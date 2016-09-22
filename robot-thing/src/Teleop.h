@@ -241,10 +241,17 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_intake->SetIntakePosition(Intake::IntakePosition::retracted);
 			break;
 		case DualAction::Back:
-			m_hanger->SetManualHang(pressedP);
+			if (pressedP) {
+				m_hanger->SetHangerState(Hanger::HangerState::down);
+			}
 			break;
 		case DualAction::Start:
-			m_hanger->SetAutoHang(pressedP);
+			if (pressedP) {
+				m_hanger->SetHangerState(Hanger::HangerState::up);
+			}
+			else {
+				m_hanger->SetHangerState(Hanger::HangerState::stop);
+			}
 			break;
 		}
 	}
