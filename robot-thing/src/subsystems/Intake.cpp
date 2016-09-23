@@ -15,7 +15,7 @@ namespace frc973 {
 Intake::Intake(TaskMgr *scheduler) :
 	m_intakeMotor(new VictorSP(CROSS_INTAKE_MOTOR_PWM)),
 	m_intakeMotorB(new VictorSP(LOWER_CONVEYOR_MOTOR_PWM)),
-	m_intakeSolenoid(new Solenoid(INTAKE_EXTENSION_SOL)),
+	m_intakeSolenoid(new Solenoid(1, INTAKE_EXTENSION_SOL)),
 	m_intakeMode(IntakeMode::off),
 	m_intakePosition(IntakePosition::retracted),
 	m_scheduler(scheduler)

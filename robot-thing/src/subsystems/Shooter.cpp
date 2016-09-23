@@ -23,7 +23,7 @@ Shooter::Shooter(TaskMgr *scheduler, LogSpreadsheet *logger) :
 		m_conveyor(new VictorSP(SHOOTER_CONVEYER_MOTOR_PWM)),
 		m_flywheelEnabled(false),
 		m_elevatorState(ShooterHeight::low),
-		m_shooterHeightSol(new Solenoid(SHOOTER_ANGLE_SOL)),
+		m_shooterHeightSol(new Solenoid(1, SHOOTER_ANGLE_SOL)),
 		m_scheduler(scheduler)
 {
 	m_scheduler->RegisterTask("Shooter", this, TASK_PERIODIC);

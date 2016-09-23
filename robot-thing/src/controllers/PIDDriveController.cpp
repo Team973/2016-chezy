@@ -50,7 +50,10 @@ void PIDDriveController::CalcDriveOutput(DriveStateProvider *state,
 	m_prevAngle = state->GetAngle();
 
 	double throttle;
-	double turn = Util::bound(m_turnPID->CalcOutput(m_prevAngle), -0.5, 0.5);
+	double turn = -Util::bound(m_turnPID->CalcOutput(m_prevAngle), -0.5, 0.5);
+
+	DBStringPrintf(DBStringPos::DB_LINE3, "a %2.2lf s %2.2lf", m_prevAngle,
+			m_turnPID->GetTarget());
 
 	/*
 	double turn = m_turnPID->CalcOutput(m_prevAngle);

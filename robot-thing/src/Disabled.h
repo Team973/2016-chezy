@@ -77,6 +77,8 @@ void Robot::HandleDisabledButton(uint32_t port, uint32_t button,
 			break;
 		}
 	}
+	else if( port == OPERATOR_JOYSTICK_PORT) {
+	}
 }
 
 }

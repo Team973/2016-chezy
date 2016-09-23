@@ -54,7 +54,7 @@ void Robot::TeleopContinuous(void) {
 		turretManualControl = true;
 		m_turret->SetTurretAutoTarget(false);
 	}
-	if (turretManualControl  == true){
+	if (turretManualControl == true){
 		m_turret->SetTurretPower(turretControlPower * 0.5);
 	}
 
@@ -207,9 +207,11 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::RightBumper:
 			if (pressedP) {
 				m_intake->SetIntakeMode(Intake::IntakeMode::forward);
+				m_shooter->SetConveyorPower(0.8);
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
+				m_shooter->SetConveyorPower(0.0);
 			}
 			break;
 		case DualAction::RightTrigger:
@@ -243,6 +245,9 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 		case DualAction::Back:
 			if (pressedP) {
 				m_hanger->SetHangerState(Hanger::HangerState::down);
+			}
+			else {
+				m_hanger->SetHangerState(Hanger::HangerState::stop);
 			}
 			break;
 		case DualAction::Start:

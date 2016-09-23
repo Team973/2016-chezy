@@ -58,12 +58,7 @@ void Robot::AutonomousContinuous(void) {
 		m_drive->PIDDrive(AutonomousDistance(m_autoDistance), Drive::RelativeTo::Now, 0.8);
 		m_turret->SetTurretAutoTarget(true);
 		m_autoTimer = GetMsecTime();
-		if (m_autoShooterHeight == AutoShooterHeight::low) {
-			m_shooter->SetShooterHeight(Shooter::ShooterHeight::low);
-		}
-		else {
-			m_shooter->SetShooterHeight(Shooter::ShooterHeight::high);
-		}
+		m_shooter->SetShooterHeight(Shooter::ShooterHeight::high);
 		m_autoState++;
 		break;
 	case 1:
@@ -80,7 +75,6 @@ void Robot::AutonomousContinuous(void) {
 		if ((m_drive->OnTarget() && GetMsecTime() - m_autoTimer >= 3000)
 				|| GetMsecTime() - m_autoTimer > 6000){
 			m_shooter->SetConveyorPower(1.0);
-			m_shooter->SetFlywheelStop();
 			m_autoState++;
 		}
 		break;

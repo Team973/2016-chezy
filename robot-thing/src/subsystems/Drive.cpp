@@ -28,7 +28,7 @@ Drive::Drive(TaskMgr *scheduler, VictorSP *left, VictorSP *right,
 		 , m_rightEncoder(rightEncoder)
 		 , m_gyro(gyro)
 		 , m_gearing(DriveGearing::LowGear)
-		 , m_gearingSolenoid(new Solenoid(DRIVE_SHIFT_SOL))
+		 , m_gearingSolenoid(new Solenoid(1, DRIVE_SHIFT_SOL))
 		 , m_leftPower(0.0)
 		 , m_rightPower(0.0)
 		 , m_leftMotor(left)

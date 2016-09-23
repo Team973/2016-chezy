@@ -21,7 +21,7 @@ Turret::Turret(TaskMgr *scheduler)
 		, m_targetFoundInput(new DigitalInput(PIXY_CAM_DIGITAL_PORT))
 		, m_scheduler(scheduler)
 		, m_greenFlashlight(new Solenoid(1, GREEN_FLASHLIGHT))
-		, m_manualFlashlight(new Solenoid(MANUAL_FLASHLIGHT))
+		, m_manualFlashlight(new Solenoid(1, MANUAL_FLASHLIGHT))
 		, m_flashlightMode (Flashlight::on)
 		, m_flashlightStarted(false)
 {
@@ -94,7 +94,7 @@ void Turret::TaskPeriodic(RobotMode mode) {
 	if (m_autoTargetEnabled) {
 		if (m_targetFoundInput->Get()) {
 			double offset = (m_offsetInput->GetVoltage() - (3.3 / 2));
-			double power = Util::signedIncrease(offset * 0.5, 0.05);
+			double power = Util::signedIncrease(offset * 0.6, 0.055);
 			m_turretMotor->Set(power);
 			printf("turr offset %f pow %f\n", offset, power);
 		}
