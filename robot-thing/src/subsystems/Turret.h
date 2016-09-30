@@ -14,6 +14,7 @@
 namespace frc973 {
 
 class TaskMgr;
+class Drive;
 
 class Turret: public CoopTask {
 public:
@@ -23,7 +24,7 @@ public:
 		off
 	};
 
-	Turret(TaskMgr *scheduler);
+	Turret(TaskMgr *scheduler, Drive *drive);
 	virtual ~Turret();
 
 	/** Set turret position in degrees where 0 is forward and 90 is right */
@@ -47,6 +48,7 @@ private:
 	Solenoid *m_manualFlashlight;
 	Flashlight m_flashlightMode;
 	bool m_flashlightStarted;
+	Drive *m_drive;
 };
 
 }

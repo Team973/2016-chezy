@@ -9,12 +9,13 @@
 #include "RobotInfo.h"
 #include "lib/TaskMgr.h"
 #include "lib/util/Util.h"
+#include <subsystems/Drive.h>
 
 namespace frc973 {
 
 constexpr double CLICKS_PER_DEGREE = 14.0;
 
-Turret::Turret(TaskMgr *scheduler)
+Turret::Turret(TaskMgr *scheduler, Drive *drive)
 		: m_turretMotor(new CANTalon(SHOOTER_TURRET_CAN_ID))
 		, m_autoTargetEnabled(false)
 		, m_offsetInput(new AnalogInput(PIXY_CAM_ANALOG_PORT))
@@ -24,6 +25,7 @@ Turret::Turret(TaskMgr *scheduler)
 		, m_manualFlashlight(new Solenoid(1, MANUAL_FLASHLIGHT))
 		, m_flashlightMode (Flashlight::on)
 		, m_flashlightStarted(false)
+		, m_drive(drive)
 {
 	m_scheduler->RegisterTask("Shooter", this, TASK_PERIODIC);
 	m_turretMotor->SetFeedbackDevice(CANTalon::FeedbackDevice::QuadEncoder);
@@ -95,7 +97,8 @@ void Turret::TaskPeriodic(RobotMode mode) {
 		if (m_targetFoundInput->Get()) {
 			double offset = (m_offsetInput->GetVoltage() - (3.3 / 2));
 			double power = Util::signedIncrease(offset * 0.6, 0.055);
-			m_turretMotor->Set(power);
+			double feedForward = m_drive->GetAngularRate() * -1.0;
+			m_turretMotor->Set(power + feedForward);
 			printf("turr offset %f pow %f\n", offset, power);
 		}
 	}

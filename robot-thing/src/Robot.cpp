@@ -77,7 +77,7 @@ Robot::Robot(void
 	fprintf(stderr, "Finished drive init\n");
 
 	m_intake = new Intake(this);
-	m_turret = new Turret(this);
+	m_turret = new Turret(this, m_drive);
 	m_hanger = new Hanger(this, m_drive);
 
 	fprintf(stderr, "Finished intake init\n");
