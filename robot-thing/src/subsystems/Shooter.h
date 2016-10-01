@@ -36,8 +36,10 @@ public:
 		low
 	};
 
-	Shooter(TaskMgr *scheduler, LogSpreadsheet *logger);
+	Shooter(TaskMgr *scheduler, LogSpreadsheet *logger, PowerDistributionPanel *pdp);
 	virtual ~Shooter();
+
+	bool IsFlywheelReady();
 
 	void SetFlywheelStart();
 	void SetFlywheelStop();
@@ -58,6 +60,7 @@ private:
 	Solenoid *m_shooterHeightSol;
 
 	TaskMgr *m_scheduler;
+	PowerDistributionPanel *m_pdp;
 
 	static constexpr double FLYWHEEL_ENABLED_SPEED = 1.0;
 };

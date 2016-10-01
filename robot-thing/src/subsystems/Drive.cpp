@@ -212,6 +212,15 @@ void Drive::SetDriveOutput(double left, double right) {
 	}
 }
 
+bool Drive::IsDriveStopped(){
+	if (Util::abs(GetLeftRate()) < 0.5 && Util::abs(GetRightRate()) < 0.5 && Util::abs(GetAngularRate()) < 0.5){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 void Drive::TaskPeriodic(RobotMode mode) {
 	m_angleLog->LogDouble(this->GetAngle());
 	m_angularRateLog->LogDouble(this->GetAngularRate());

@@ -17,14 +17,15 @@ namespace frc973 {
 static constexpr bool SOL_EXTENDED = true;
 static constexpr bool SOL_RETRACTED = false;
 
-Shooter::Shooter(TaskMgr *scheduler, LogSpreadsheet *logger) :
+Shooter::Shooter(TaskMgr *scheduler, LogSpreadsheet *logger, PowerDistributionPanel *pdp) :
 		m_topFlywheelMotor(new VictorSP(TOP_FLYWHEEL_PWM)),
 		m_bottomFlywheelMotor(new VictorSP(BOTTOM_FLYWHEEL_PWM)),
 		m_conveyor(new VictorSP(SHOOTER_CONVEYER_MOTOR_PWM)),
 		m_flywheelEnabled(false),
 		m_elevatorState(ShooterHeight::low),
 		m_shooterHeightSol(new Solenoid(1, SHOOTER_ANGLE_SOL)),
-		m_scheduler(scheduler)
+		m_scheduler(scheduler),
+		m_pdp(pdp)
 {
 	m_scheduler->RegisterTask("Shooter", this, TASK_PERIODIC);
 }
@@ -55,6 +56,18 @@ void Shooter::TaskPeriodic(RobotMode mode) {
 	else {
 		m_topFlywheelMotor->Set(0.0);
 		m_bottomFlywheelMotor->Set(0.0);
+	}
+	DBStringPrintf(DBStringPos::DB_LINE2, "%2.1lf %2.1lf %2.1lf %2.1lf",
+				m_pdp->GetCurrent(4), m_pdp->GetCurrent(2), m_pdp->GetCurrent(6), m_pdp->GetCurrent(7));
+}
+
+bool Shooter::IsFlywheelReady(){
+	if (m_pdp->GetCurrent(TOP_FLYWHEEL_PDP) < 6.0 && m_pdp->GetCurrent(BOTTOM_FLYWHEEL_PDP) < 6.0
+			&& m_pdp->GetCurrent(TOP_FLYWHEEL_PDP) > 3.0 && m_pdp->GetCurrent(BOTTOM_FLYWHEEL_PDP) > 3.0){
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 

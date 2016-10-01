@@ -139,6 +139,8 @@ public:
 	 */
 	void SetDriveOutput(double left, double right) override;
 
+	bool IsDriveStopped();
+
 private:
 	void TaskPeriodic(RobotMode mode) override;
 

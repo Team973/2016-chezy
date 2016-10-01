@@ -21,6 +21,8 @@ constexpr int DRIVE_LEFT_PWM = 0;
 constexpr int TOP_FLYWHEEL_PWM = 3;
 constexpr int BOTTOM_FLYWHEEL_PWM = 6;
 
+constexpr int TOP_FLYWHEEL_PDP = 4;
+constexpr int BOTTOM_FLYWHEEL_PDP = 2;
 //constexpr int UNUSED_PWM = 4;
 
 //constexpr int LINEAR_EXTENSION_PWM = 5;

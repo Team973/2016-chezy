@@ -18,6 +18,7 @@ static bool teleopDrive = true;
 static bool conveyorNeedsStop = false;
 static bool intakeNeedsStop = false;
 static bool turretManualControl = true;
+static bool shouldBeShooting = false;
 
 void Robot::TeleopContinuous(void) {
 	double intakePower = m_operatorJoystick->GetRawAxisWithDeadband(
@@ -31,6 +32,12 @@ void Robot::TeleopContinuous(void) {
 		intakeNeedsStop = false;
 	}
 
+	if (m_shooter->IsFlywheelReady() && shouldBeShooting == true
+			&& m_drive->IsDriveStopped() && m_turret->TurretOnTarget()) {
+		m_intake->SetIntakeMode(Intake::IntakeMode::forward);
+		m_shooter->SetConveyorPower(0.8);
+		m_compressor->Disable();
+	}
 
 	double conveyorPower = m_operatorJoystick->GetRawAxisWithDeadband(
 			DualAction::LeftXAxis, 0.2);
@@ -128,14 +135,13 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			break;
 		case DualAction::RightTrigger:
 			if (pressedP) {
-				m_intake->SetIntakeMode(Intake::IntakeMode::forward);
-				m_shooter->SetConveyorPower(0.8);
-				m_compressor->Disable();
+				shouldBeShooting = true;
 			}
 			else {
 				m_intake->SetIntakeMode(Intake::IntakeMode::off);
 				m_shooter->SetConveyorPower(0.0);
 				m_compressor->Enable();
+				shouldBeShooting = false;
 			}
 			break;
 		case DualAction::Start:

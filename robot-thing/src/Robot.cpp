@@ -98,7 +98,7 @@ Robot::Robot(void
 	m_logger->RegisterCell(m_buttonPresses);
 	fprintf(stderr, "Finished logger init\n");
 
-	m_shooter = new Shooter(this, m_logger);
+	m_shooter = new Shooter(this, m_logger, m_pdp);
 	fprintf(stderr, "Finished shooter init\n");
 }
 
