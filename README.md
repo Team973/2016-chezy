@@ -2,8 +2,6 @@
 
 Copied from 2016-inseason code.  Will strip things down and make adjustments to account for difference in robot.
 
-arbitrary change
-
 ###Where stuff is
 
 Robot code is in robot-thing/src.
