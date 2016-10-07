@@ -17,7 +17,7 @@ namespace frc973 {
 
 static constexpr double DEFAULT_HANG_POWER = -1.0;
 
-Hanger::Hanger(TaskMgr *scheduler, Drive *drive)
+Hanger::Hanger(TaskMgr *scheduler, Drive *drive, Shooter *shooter, Turret *turret)
 		 : CoopTask()
 		 , m_scheduler(scheduler)
 		 , m_drive(drive)
@@ -27,6 +27,8 @@ Hanger::Hanger(TaskMgr *scheduler, Drive *drive)
 		 , m_rightHookSensor(new DigitalInput(RIGHT_HOOK_HALL_DIN))
 		 , m_hooksReleased(false)
 		 , m_everSeenSwitch(false)
+		 , m_turret()
+		 , m_shooter()
 		 , m_state(HangerState::stop) {
 	m_scheduler->RegisterTask("Hanger", this, TASK_PERIODIC);
 

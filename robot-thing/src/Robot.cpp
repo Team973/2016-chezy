@@ -78,7 +78,8 @@ Robot::Robot(void
 
 	m_intake = new Intake(this);
 	m_turret = new Turret(this, m_drive);
-	m_hanger = new Hanger(this, m_drive);
+	m_shooter = new Shooter(this, m_logger, m_pdp);
+	m_hanger = new Hanger(this, m_drive, m_shooter, m_turret);
 
 	fprintf(stderr, "Finished intake init\n");
 	m_airPressureSwitch = new DigitalInput(AIR_PRESSURE_DIN);
@@ -98,7 +99,6 @@ Robot::Robot(void
 	m_logger->RegisterCell(m_buttonPresses);
 	fprintf(stderr, "Finished logger init\n");
 
-	m_shooter = new Shooter(this, m_logger, m_pdp);
 	fprintf(stderr, "Finished shooter init\n");
 }
 

@@ -19,6 +19,7 @@ namespace frc973 {
 
 class Drive;
 class Shooter;
+class Turret;
 
 class Hanger : public CoopTask {
 public:
@@ -28,7 +29,7 @@ public:
 		stop
 	};
 
-	Hanger(TaskMgr *scheduler, Drive *drive);
+	Hanger(TaskMgr *scheduler, Drive *drive, Shooter *shooter, Turret *turret);
 	virtual ~Hanger();
 
 	void SetHangerState(HangerState state);
@@ -44,6 +45,8 @@ private:
 
 	TaskMgr *m_scheduler;
 	Drive *m_drive;
+	Shooter *m_shooter;
+	Turret *m_turret;
 
 	DoubleSolenoid *m_ptoRelease;
 	CANTalon *m_crankMotor;

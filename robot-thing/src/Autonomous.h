@@ -13,8 +13,6 @@ static constexpr double POS_5_DIST = 0.0 * 12.0;
 static constexpr int GO_BACK_START = 1001;
 static constexpr int POST_BALL_SNATCH = 30;
 
-static double headingBeforeTurn = 0.0;
-
 double AutonomousDistance(Robot::AutoDistance autoDist){
 	double dist = 0.0;
 	switch(autoDist) {
