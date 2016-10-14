@@ -12,6 +12,7 @@
 
 #include "WPILib.h"
 #include "RobotInfo.h"
+#include "subsystems/Turret.h"
 
 namespace frc973 {
 
@@ -40,13 +41,10 @@ Hanger::~Hanger() {
 }
 
 void Hanger::SetHangerState(HangerState state) {
-	switch (state) {
-	case HangerState::up:
-	case HangerState::down:
-		if (!m_hooksReleased) {
-			TryReleaseHooks();
-		}
-	case HangerState::stop:
+	if (state == autohangprefire || state == autohang){
+		//Do nothing. Thous shall not pass.
+	}
+	else if (m_state == stop || m_state == down || m_state == up || m_state == autohang){
 		m_state = state;
 	}
 }
@@ -75,6 +73,24 @@ void Hanger::TaskPeriodic(RobotMode mode) {
 		break;
 	case HangerState::stop:
 		m_crankMotor->Set(0.0);
+		break;
+	case HangerState::autohang:
+		m_crankMotor->Set(DEFAULT_HANG_POWER);
+		if (m_leftHookSensor->Get() == true || m_rightHookSensor->Get() == true){
+			m_crankMotor->Set(0.0);
+			m_state = autohangprefire;
+		}
+		break;
+	case HangerState::autohangprefire:
+		m_turret->SetTurretAutoTarget(false);
+		m_turret->SetTurretPosition(0.0);
+		m_shooter->SetFlywheelStart();
+		if (m_shooter->IsFlywheelReady() == true){
+			m_state = autohangfire;
+		}
+		break;
+	case HangerState::autohangfire:
+		m_shooter->SetConveyorPower(1.0);
 		break;
 	}
 }

@@ -26,7 +26,10 @@ public:
 	enum HangerState {
 		up,
 		down,
-		stop
+		stop,
+		autohang,
+		autohangprefire,
+		autohangfire
 	};
 
 	Hanger(TaskMgr *scheduler, Drive *drive, Shooter *shooter, Turret *turret);

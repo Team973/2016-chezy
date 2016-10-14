@@ -77,6 +77,19 @@ void Robot::TeleopContinuous(void) {
 		m_drive->ArcadeDrive(y, x);
 	}
 
+	if (m_operatorJoystick->GetRawAxis(DualAction::LeftYAxis) > 0.8){
+		m_hanger->SetHangerState(Hanger::HangerState::up);
+	}
+
+	else if (m_operatorJoystick->GetRawAxis(DualAction::LeftYAxis) < -0.8){
+		m_hanger->SetHangerState(Hanger::HangerState::down);
+	}
+
+	else {
+		if (m_operatorJoystick->GetRawButton(DualAction::Start) != true){
+			m_hanger->SetHangerState(Hanger::HangerState::stop);
+		}
+	}
  	/*
 	printf("gyro reading %lf... raw counts %d\n", m_gyroEncoder->GetDistance(),
 			m_gyroEncoder->GetRaw());
@@ -249,16 +262,10 @@ void Robot::HandleTeleopButton(uint32_t port, uint32_t button,
 			m_intake->SetIntakePosition(Intake::IntakePosition::retracted);
 			break;
 		case DualAction::Back:
-			if (pressedP) {
-				m_hanger->SetHangerState(Hanger::HangerState::down);
-			}
-			else {
-				m_hanger->SetHangerState(Hanger::HangerState::stop);
-			}
 			break;
 		case DualAction::Start:
 			if (pressedP) {
-				m_hanger->SetHangerState(Hanger::HangerState::up);
+				m_hanger->SetHangerState(Hanger::HangerState::autohang);
 			}
 			else {
 				m_hanger->SetHangerState(Hanger::HangerState::stop);
